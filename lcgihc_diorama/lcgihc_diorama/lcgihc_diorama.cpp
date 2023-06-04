@@ -39,6 +39,9 @@ const float toRadians = 3.14159265f / 180.0f;
 //variables para animación
 float toffsetu = 0.0f;
 float toffsetv = 0.0f;
+float angAletas = 0.0;
+float angAletasOffset = 0.5;
+bool movAletasB = true; 
 
 //variables de control de skybox
 int momento_ciclo;
@@ -243,6 +246,18 @@ void CreateObjects()
 
 /* FIN KEYFRAMES*/
 
+void movAletas() {
+	if (angAletas <= 30.0f and movAletasB)
+		angAletas += angAletasOffset * deltaTime;
+	else
+		movAletasB = false;
+
+	if (angAletas >= -30.0f and !movAletasB)
+		angAletas -= angAletasOffset * deltaTime;
+	else
+		movAletasB = true;
+}
+
 
 int main()
 {
@@ -259,36 +274,41 @@ int main()
 
     // Modelo y posición de los personajes 
 	cuerpoSkipper = Model();
-	cuerpoSkipper.LoadModel("Obj/model_penguins-of-madagascar/CuerpoSkipper.obj");
+	cuerpoSkipper.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/CuerpoSkipper.obj");
 	brazoIzqSkipper = Model();
-	brazoIzqSkipper.LoadModel("Obj/model_penguins-of-madagascar/BrazoIzqSkipper.obj");
+	brazoIzqSkipper.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/BrazoIzqSkipper.obj");
 	brazoDerSkipper = Model();
-	brazoDerSkipper.LoadModel("Obj/model_penguins-of-madagascar/BrazoDerSkipper.obj");
-	posSkipper = glm::vec3(10.0f, 0.0f, 10.0f);
+	brazoDerSkipper.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/BrazoDerSkipper.obj");
 
 	cuerpoRico = Model();
-	cuerpoRico.LoadModel("Obj/model_penguins-of-madagascar/CuerpoRico.obj");
+	cuerpoRico.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/CuerpoRico.obj");
 	brazoIzqRico = Model();
-	brazoIzqRico.LoadModel("Obj/model_penguins-of-madagascar/BrazoIzqRico.obj");
+	brazoIzqRico.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/BrazoIzqRico.obj");
 	brazoDerRico = Model();
-	brazoDerRico.LoadModel("Obj/model_penguins-of-madagascar/BrazoDerRico.obj");
-	posRico = glm::vec3(0.0f, 0.0f, 0.0f);
+	brazoDerRico.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/BrazoDerRico.obj");
+
 
 	cuerpoKowalski = Model();
-	cuerpoKowalski.LoadModel("Obj/model_penguins-of-madagascar/CuerpoKowalski.obj");
+	cuerpoKowalski.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/CuerpoKowalski.obj");
 	brazoIzqKowalski = Model();
-	brazoIzqKowalski.LoadModel("Obj/model_penguins-of-madagascar/BrazoIzqKowalski.obj");
+	brazoIzqKowalski.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/BrazoIzqKowalski.obj");
 	brazoDerKowalski = Model();
-	brazoDerKowalski.LoadModel("Obj/model_penguins-of-madagascar/BrazoDerKowalski.obj");
-	posKowalski = glm::vec3(-10.0f, 0.0f, 10.0f); 
+	brazoDerKowalski.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/BrazoDerKowalski.obj");
 
 	cuerpoCabo = Model();
-	cuerpoCabo.LoadModel("Obj/model_penguins-of-madagascar/CuerpoCabo.obj");
+	cuerpoCabo.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/CuerpoCabo.obj");
 	brazoIzqCabo = Model();
-	brazoIzqCabo.LoadModel("Obj/model_penguins-of-madagascar/BrazoIzqCabo.obj");
+	brazoIzqCabo.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/BrazoIzqCabo.obj");
 	brazoDerCabo = Model();
-	brazoDerCabo.LoadModel("Obj/model_penguins-of-madagascar/BrazoDerCabo.obj");
-	posCabo = glm::vec3(10.0f, 0.0f, -10.0f); 
+	brazoDerCabo.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/BrazoDerCabo.obj");
+
+	posSkipper = glm::vec3(10.0f, 0.0f, 0.0f);
+	posRico = glm::vec3(0.0f, 0.0f, 0.0f);
+	posKowalski = glm::vec3(20.0f, 0.0f, 0.0f);
+	posCabo = glm::vec3(30.0f, 0.0f, 0.0f); 
+
+	glm::vec3 escalaPinguinos = glm::vec3(20.0f, 20.0f, 20.0f);
+
 
 	// Importacion de texturas Skybox
 	std::vector<std::string> skyboxFaces;
@@ -533,18 +553,25 @@ int main()
 		// ---------------  S K I P P E R  ----------------------
 
 		model = glm::mat4(1.0);
+		modelaux = glm::mat4(1.0);
 		model = glm::translate(model, posSkipper);
-		model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+		model = glm::scale(model, escalaPinguinos);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		cuerpoSkipper.RenderModel();
 
+		modelaux = model;
+
 		model = glm::translate(model, glm::vec3(-0.05f, 0.25f, 0.0f));
+		model = glm::rotate(model, (-90 + angAletas) * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brazoIzqSkipper.RenderModel();
 
-		model = glm::translate(model, glm::vec3(0.1f, 0.0f, 0.0f));
+		model = modelaux; 
+
+		model = glm::translate(model, glm::vec3(0.08f, 0.25f, 0.0f));
+		model = glm::rotate(model, -55 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brazoDerSkipper.RenderModel();
@@ -552,62 +579,85 @@ int main()
 		// ---------------  R I C O  ----------------------
 
 		model = glm::mat4(1.0);
+		modelaux = glm::mat4(1.0);
 		model = glm::translate(model, posRico);
-		model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+		model = glm::scale(model, escalaPinguinos);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		cuerpoRico.RenderModel();
 
+		modelaux = model;
+
 		model = glm::translate(model, glm::vec3(-0.05f, 0.25f, 0.0f));
+		model = glm::rotate(model, (-90 + angAletas) * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brazoIzqRico.RenderModel();
 
-		model = glm::translate(model, glm::vec3(0.1f, 0.0f, 0.0f));
+		model = modelaux;
+
+		model = glm::translate(model, glm::vec3(0.08f, 0.25f, 0.0f));
+		model = glm::rotate(model, -55 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brazoDerRico.RenderModel();
 
 		// ---------------  K O W A L S K I  ----------------------
-
+		
 		model = glm::mat4(1.0);
+		modelaux = glm::mat4(1.0);
 		model = glm::translate(model, posKowalski);
-		model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+		model = glm::scale(model, escalaPinguinos);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		cuerpoKowalski.RenderModel();
 
-		model = glm::translate(model, glm::vec3(-0.01f, 0.0f, 0.0f));
+		modelaux = model;
+
+		model = glm::translate(model, glm::vec3(0.15f, 0.3f, 0.0f));
+		model = glm::rotate(model, (-90 + angAletas) * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brazoIzqKowalski.RenderModel();
+		
+		model = modelaux; 
 
-		model = glm::translate(model, glm::vec3(0.02f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.28f, 0.3f, 0.0f));
+		model = glm::rotate(model, -55 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brazoDerKowalski.RenderModel();
+				
 
 		// ---------------  C A B O  ----------------------
 
 		model = glm::mat4(1.0);
+		modelaux = glm::mat4(1.0);
 		model = glm::translate(model, posCabo);
-		model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+		model = glm::scale(model, escalaPinguinos);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		cuerpoCabo.RenderModel();
 
+		modelaux = model;
+
 		model = glm::translate(model, glm::vec3(-0.05f, 0.20f, 0.0f));
+		model = glm::rotate(model, (-90 + angAletas) * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brazoIzqCabo.RenderModel();
+		
+		model = modelaux;
 
-		model = glm::translate(model, glm::vec3(0.1f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.08f, 0.20f, 0.0f));
+		model = glm::rotate(model, -55 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brazoDerCabo.RenderModel();
 
-
 		
+		movAletas(); 
+
 
 		glUseProgram(0);
 
