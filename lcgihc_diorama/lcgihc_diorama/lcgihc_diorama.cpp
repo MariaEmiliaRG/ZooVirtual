@@ -64,17 +64,7 @@ Camera camera;
 //MODELOS DEL PROYECTO 
 
 Model escenario;
-Model blazeReap;
-Model brujula;
-Model cuchillo;
-Model faputa;
-Model gaburoon;
-Model neritantan;
-Model planta;
-Model reg;
-Model reliquia;
-Model roca;
-Model medusa;
+Model cuerpoSkipper; 
 
 // Modelos skybox
 Skybox skybox;
@@ -233,28 +223,9 @@ int main()
 
 	escenario = Model();
 	escenario.LoadModel("Obj/Escenario.obj");
-	blazeReap = Model();
-	blazeReap.LoadModel("Obj/BlazeReap.obj");
-	brujula = Model();
-	brujula.LoadModel("Obj/Brujula.obj");
-	cuchillo = Model();
-	cuchillo.LoadModel("Obj/Cuchillo.obj");
-	faputa = Model();
-	faputa.LoadModel("Obj/Faputa_full.obj");
-	gaburoon = Model();
-	gaburoon.LoadModel("Obj/Gaburoon_full.obj");
-	neritantan = Model();
-	neritantan.LoadModel("Obj/Neritantan.obj");
-	planta = Model();
-	planta.LoadModel("Obj/Planta.obj");
-	reg = Model();
-	reg.LoadModel("Obj/Reg_full.obj");
-	reliquia = Model();
-	reliquia.LoadModel("Obj/Reliquia.obj");
-	roca = Model();
-	roca.LoadModel("Obj/Roca.obj");
-	medusa = Model();
-	medusa.LoadModel("Obj/Swarm-shocker.obj");
+	cuerpoSkipper = Model();
+	cuerpoSkipper.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/CuerpoSkipper.fbx");
+
 
 
 	// Importacion de texturas Skybox
@@ -489,7 +460,7 @@ int main()
 		model = glm::scale(model, glm::vec3(7.0f, 4.0f, 7.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		escenario.RenderModel();
+		cuerpoSkipper.RenderModel();
 
 		
 
