@@ -232,29 +232,7 @@ int main()
 	camera = Camera(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.5f, 0.5f);
 
 	escenario = Model();
-	escenario.LoadModel("Obj/Escenario.obj");
-	blazeReap = Model();
-	blazeReap.LoadModel("Obj/BlazeReap.obj");
-	brujula = Model();
-	brujula.LoadModel("Obj/Brujula.obj");
-	cuchillo = Model();
-	cuchillo.LoadModel("Obj/Cuchillo.obj");
-	faputa = Model();
-	faputa.LoadModel("Obj/Faputa_full.obj");
-	gaburoon = Model();
-	gaburoon.LoadModel("Obj/Gaburoon_full.obj");
-	neritantan = Model();
-	neritantan.LoadModel("Obj/Neritantan.obj");
-	planta = Model();
-	planta.LoadModel("Obj/Planta.obj");
-	reg = Model();
-	reg.LoadModel("Obj/Reg_full.obj");
-	reliquia = Model();
-	reliquia.LoadModel("Obj/Reliquia.obj");
-	roca = Model();
-	roca.LoadModel("Obj/Roca.obj");
-	medusa = Model();
-	medusa.LoadModel("Obj/Swarm-shocker.obj");
+	escenario.LoadModel("Obj/habitatPinguinos.obj");
 
 
 	// Importacion de texturas Skybox
