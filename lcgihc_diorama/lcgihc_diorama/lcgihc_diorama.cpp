@@ -44,6 +44,7 @@ float angAletasOffset = 0.5;
 bool movAletasB = true; 
 float angTMarlene = 0.0f; 
 float angTMarleneOffset = 0.005f;
+float angMarlene = -135.0f; 
 
 //variables de control de skybox
 int momento_ciclo;
@@ -582,7 +583,9 @@ int main()
 
 		meshList[0]->RenderMesh();
 
-		//PERSONAJES 
+		//PERSONAJES
+
+		/*
 
 		// ---------------  S K I P P E R  ----------------------
 
@@ -689,13 +692,15 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brazoDerCabo.RenderModel();
 
+		*/
+
 		// ---------------  M A R L E N E  ----------------------
 
 		model = glm::mat4(1.0); 
 		modelaux = glm::mat4(1.0); 
 		model = glm::translate(model, posMarlene + lemniscate); 
 		model = glm::scale(model, escalaMarlene); 
-		model = glm::rotate(model, angTMarlene * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, (-135 + angMarlene) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model)); 
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess); 
 		cuerpoMarlene.RenderModel(); 
@@ -747,6 +752,20 @@ int main()
 		if (angTMarlene >= 360) {
 			angTMarlene = 0;
 		}
+
+		if (posMarlene.x + lemniscate.x >= 20)
+			angMarlene -= 0.9 * deltaTime; 
+
+		if (posMarlene.x + lemniscate.x <= -20)
+			angMarlene += 0.9 * deltaTime;
+
+		if (mainWindow.getsKeys()[GLFW_KEY_G])
+			printf("%f, pos %f\n", angMarlene, posMarlene.x + lemniscate.x);
+
+
+
+
+
 		
 		
 
