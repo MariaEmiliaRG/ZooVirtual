@@ -25,7 +25,7 @@ Proyecto final
 #include "Camera.h"
 #include "Texture.h"
 #include "Sphere.h"
-#include"Model.h"
+#include "Model.h"
 #include "Skybox.h"
 
 //para iluminación
@@ -42,6 +42,8 @@ float toffsetv = 0.0f;
 float angAletas = 0.0;
 float angAletasOffset = 0.5;
 bool movAletasB = true; 
+float angTMarlene = 0.0f; 
+float angTMarleneOffset = 0.005f;
 
 //variables de control de skybox
 int momento_ciclo;
@@ -83,6 +85,7 @@ glm::vec3 posRico;
 glm::vec3 posKowalski;
 glm::vec3 posCabo;
 glm::vec3 posMarlene; 
+glm::vec3 lemniscate;
 
 // Modelos skybox
 Skybox skybox;
@@ -264,6 +267,15 @@ void movAletas() {
 		movAletasB = true;
 }
 
+void movLemniscate(float t) {
+	float a = 50; 
+	float x = 0; 
+	float z = 0; 
+
+	x = (a * cos(t))/ (1 + (sin(t) * sin(t))); 
+	z = (a * cos(t) * sin(t)) / (1 + (sin(t) * sin(t)));
+	lemniscate = glm::vec3(x, 0.0f, z);
+}
 
 int main()
 {
@@ -326,6 +338,7 @@ int main()
 	posKowalski = glm::vec3(20.0f, 0.0f, 0.0f);
 	posCabo = glm::vec3(30.0f, 0.0f, 0.0f); 
 	posMarlene = glm::vec3(0.0f, 5.0f, 0.0f);
+	lemniscate = glm::vec3(0.0f, 5.0f, 0.0f);
 
 	glm::vec3 escalaPinguinos = glm::vec3(20.0f, 20.0f, 20.0f);
 	glm::vec3 escalaMarlene = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -680,8 +693,9 @@ int main()
 
 		model = glm::mat4(1.0); 
 		modelaux = glm::mat4(1.0); 
-		model = glm::translate(model, posMarlene); 
+		model = glm::translate(model, posMarlene + lemniscate); 
 		model = glm::scale(model, escalaMarlene); 
+		model = glm::rotate(model, angTMarlene * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model)); 
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess); 
 		cuerpoMarlene.RenderModel(); 
@@ -723,6 +737,20 @@ int main()
 		//-- ANIMACIONES
 		//Movimiento de los brazos 
 		//movAletas(); 
+		
+		//movimiento Infinito 
+
+		angTMarlene += angTMarleneOffset * deltaTime;
+		
+		movLemniscate(angTMarlene);
+
+		if (angTMarlene >= 360) {
+			angTMarlene = 0;
+		}
+		
+		
+
+
 
 
 		glUseProgram(0);
