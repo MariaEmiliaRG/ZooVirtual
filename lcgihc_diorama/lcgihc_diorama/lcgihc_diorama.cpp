@@ -71,12 +71,18 @@ Model brazoDerKowalski;
 Model cuerpoCabo; 
 Model brazoIzqCabo;
 Model brazoDerCabo;
+Model cuerpoMarlene; 
+Model brazoIzqMarlene; 
+Model brazoDerMarlene; 
+Model piernaIzqMarlene; 
+Model piernaDerMarlene; 
 
 //-- POSICION PERSONAJES 
 glm::vec3 posSkipper; 
 glm::vec3 posRico; 
 glm::vec3 posKowalski;
 glm::vec3 posCabo;
+glm::vec3 posMarlene; 
 
 // Modelos skybox
 Skybox skybox;
@@ -302,12 +308,27 @@ int main()
 	brazoDerCabo = Model();
 	brazoDerCabo.LoadModel("Obj/model_penguins-of-madagascar/source/Penguins of Madagascar/BrazoDerCabo.obj");
 
+	cuerpoMarlene = Model();
+	cuerpoMarlene.LoadModel("Obj/model_marlene/source/Marlene/CuerpoMarlene.obj");
+	brazoIzqMarlene = Model();
+	brazoIzqMarlene.LoadModel("Obj/model_marlene/source/Marlene/BrazoIzqMarlene.obj");
+	brazoDerMarlene = Model();
+	brazoDerMarlene.LoadModel("Obj/model_marlene/source/Marlene/BrazoDerMarlene.obj");
+	piernaIzqMarlene = Model();
+	piernaIzqMarlene.LoadModel("Obj/model_marlene/source/Marlene/PiernaIzqMarlene.obj");
+	piernaDerMarlene = Model();
+	piernaDerMarlene.LoadModel("Obj/model_marlene/source/Marlene/PiernaDerMarlene.obj");
+
+
+
 	posSkipper = glm::vec3(10.0f, 0.0f, 0.0f);
 	posRico = glm::vec3(0.0f, 0.0f, 0.0f);
 	posKowalski = glm::vec3(20.0f, 0.0f, 0.0f);
 	posCabo = glm::vec3(30.0f, 0.0f, 0.0f); 
+	posMarlene = glm::vec3(0.0f, 5.0f, 0.0f);
 
 	glm::vec3 escalaPinguinos = glm::vec3(20.0f, 20.0f, 20.0f);
+	glm::vec3 escalaMarlene = glm::vec3(1.0f, 1.0f, 1.0f);
 
 
 	// Importacion de texturas Skybox
@@ -655,8 +676,53 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brazoDerCabo.RenderModel();
 
+		// ---------------  M A R L E N E  ----------------------
+
+		model = glm::mat4(1.0); 
+		modelaux = glm::mat4(1.0); 
+		model = glm::translate(model, posMarlene); 
+		model = glm::scale(model, escalaMarlene); 
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model)); 
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess); 
+		cuerpoMarlene.RenderModel(); 
+
+		modelaux = model;
+
+		model = glm::translate(model, glm::vec3(-1.0f, 0.1f, -1.8f));
+		//model = glm::rotate(model, (-90 + angAletas) * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model)); 
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess); 
+		brazoIzqMarlene.RenderModel(); 
 		
-		movAletas(); 
+
+		model = modelaux;
+
+		model = glm::translate(model, glm::vec3(-1.0f, 0.1f, 1.8f));
+		//model = glm::rotate(model, (-90 + angAletas) * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		brazoDerMarlene.RenderModel();
+
+		model = modelaux;
+
+		model = glm::translate(model, glm::vec3(5.2f, 0.2f, -1.80f));
+		//model = glm::rotate(model, (-90 + angAletas) * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		piernaIzqMarlene.RenderModel();
+
+		model = modelaux;
+		
+		model = glm::translate(model, glm::vec3(5.2f, 0.2f, 1.8f));
+		//model = glm::rotate(model, (-90 + angAletas) * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		piernaDerMarlene.RenderModel();
+
+		
+		//-- ANIMACIONES
+		//Movimiento de los brazos 
+		//movAletas(); 
 
 
 		glUseProgram(0);
