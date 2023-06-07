@@ -50,6 +50,8 @@ float movPiernaMarleneI = 45.0f;
 float movPiernaMarleneD = -45.0f; 
 float movPiernaMBI = true;
 float movPiernaMBD = false;
+float movCMono = 0.0f; 
+float movCMonoB = true; 
 
 
 //variables de control de skybox
@@ -251,6 +253,18 @@ void movBrazosPiernasMarlene() {
 		movPiernaMarleneD -= 0.9 * deltaTime;
 	else
 		movPiernaMBD = true;
+}
+
+void movColumpioMono() {
+	if (movCMono <= 60.0f and movCMonoB)
+		movCMono += +0.8 * deltaTime;
+	else
+		movCMonoB = false;
+
+	if (movCMono >= -60.0f and !movCMonoB)
+		movCMono -= 0.8 * deltaTime;
+	else
+		movCMonoB = true;
 }
 
 int main()
@@ -741,7 +755,7 @@ int main()
 		model = glm::scale(model, escalaMono);
 		modelaux = model;
 
-		//model = glm::rotate(model, (-135 + angMarlene) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, movCMono * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		cuerpoMono.RenderModel();
@@ -791,6 +805,8 @@ int main()
 		
 		//movLemniscateMarlene();
 		//movBrazosPiernasMarlene();
+
+		movColumpioMono(); 
 
 		glUseProgram(0);
 
