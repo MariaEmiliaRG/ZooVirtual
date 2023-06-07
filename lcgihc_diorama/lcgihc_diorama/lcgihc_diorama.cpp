@@ -62,18 +62,20 @@ std::vector<Shader> shaderList;
 Camera camera;
 
 //MODELOS DEL PROYECTO 
-
+Model entrada;
+Model muros;
 Model habitat_pinguino;
-Model escenario_temporal;
+Model suelo;
 Model habitat_flamingo;
 Model habitat_nutria;
-Model entrada;
+Model habitat_lemur;
+Model habitat_mono;
 Model storage;
 Model zoovenirs;
 Model bancas;
 Model contenedor;
-Model bote_basura;
-Model lampara;
+Model botes_basura;
+Model lamparas;
 Model mesas;
 Model blazeReap;
 Model brujula;
@@ -242,30 +244,36 @@ int main()
 
 	camera = Camera(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.5f, 0.5f);
 
-	habitat_pinguino= Model();
-	habitat_pinguino.LoadModel("Obj/habitatPinguinos.obj");
-	escenario_temporal = Model();
-	escenario_temporal.LoadModel("Obj/escenario_temporal/terreno_temporal.obj");
+	habitat_pinguino = Model();
+	habitat_pinguino.LoadModel("Obj/habitat_pinguinos.obj");
+	suelo = Model();
+	suelo.LoadModel("Obj/suelo.obj");
 	habitat_flamingo = Model();
 	habitat_flamingo.LoadModel("Obj/habitat_flamingo.obj");
 	habitat_nutria = Model();
-	habitat_nutria.LoadModel("Obj/habitatNutrias.obj");
+	habitat_nutria.LoadModel("Obj/habitat_nutrias.obj");
 	entrada = Model();
-	entrada.LoadModel("Obj/entrada_zoo.obj");
+	entrada.LoadModel("Obj/entrada_completa.obj");
 	storage = Model();
 	storage.LoadModel("Obj/zoo_storage.obj");
 	zoovenirs = Model();
-	zoovenirs.LoadModel("Obj/tienda_zoovenirs.obj");
+	zoovenirs.LoadModel("Obj/tiendas_zoovenirs.obj");
 	bancas = Model();
-	bancas.LoadModel("Obj/banca.obj");
+	bancas.LoadModel("Obj/bancas_objeto.obj");
 	contenedor = Model();
 	contenedor.LoadModel("Obj/contenedor.obj");
-	bote_basura = Model();
-	bote_basura.LoadModel("Obj/bote_basura.obj");
-	lampara = Model();
-	lampara.LoadModel("Obj/lampara.obj");
+	botes_basura = Model();
+	botes_basura.LoadModel("Obj/botes_basura.obj");
+	lamparas = Model();
+	lamparas.LoadModel("Obj/lamparas.obj");
 	mesas = Model();
 	mesas.LoadModel("Obj/mesas.obj");
+	muros = Model();
+	muros.LoadModel("Obj/muros.obj");
+	habitat_lemur = Model();
+	habitat_lemur.LoadModel("Obj/habitat_lemures.obj");
+	habitat_mono = Model();
+	habitat_mono.LoadModel("Obj/habitat_monos.obj");
 
 
 	// Importacion de texturas Skybox
@@ -496,104 +504,128 @@ int main()
 		//ESCENARIO
 		//Entrada zoologico
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(1000.0f, -50.0f, -550.0f));
+		//model = glm::translate(model, glm::vec3(1000.0f, -50.0f, -550.0f));
 		//model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		entrada.RenderModel();
 
 		//Almacen
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-300.0f, -50.0f, 1000.0f));
-		model = glm::rotate(model, glm::radians(-80.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		//model = glm::translate(model, glm::vec3(-300.0f, -50.0f, 1000.0f));
+		//model = glm::rotate(model, glm::radians(-80.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		storage.RenderModel();
 
 		//Tienda zoovenirs
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-350.0f, -50.0f, 800.0f));
-		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		//model = glm::translate(model, glm::vec3(-350.0f, -50.0f, 800.0f));
+		//model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		zoovenirs.RenderModel();
 
 		//Banca 1
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(300.0f, -50.0f, -600.0f));
-		model = glm::rotate(model, glm::radians(-225.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
+		//model = glm::translate(model, glm::vec3(300.0f, -50.0f, -600.0f));
+		//model = glm::rotate(model, glm::radians(-225.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		bancas.RenderModel();
 
 		//Contenedor
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(90.0f, -50.0f, 1100.0f));
-		model = glm::rotate(model, glm::radians(185.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		//model = glm::translate(model, glm::vec3(90.0f, -50.0f, 1100.0f));
+		//model = glm::rotate(model, glm::radians(185.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		contenedor.RenderModel();
 
 		//Bote basura
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-100.0f, -50.0f, -500.0f));
-		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(-100.0f, -50.0f, -500.0f));
+		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		bote_basura.RenderModel();
+		botes_basura.RenderModel();
 
 		//Lampara 1
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(370.0f, -50.0f, 30.0f));
-		model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(8.0f, 8.0f, 8.0f));
+		//model = glm::translate(model, glm::vec3(370.0f, -50.0f, 30.0f));
+		//model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(8.0f, 8.0f, 8.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		lampara.RenderModel();
+		lamparas.RenderModel();
 
-		//Mesa 1
+		//Mesas
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(20.0f, -50.0f, 700.0f));
-		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		//model = glm::translate(model, glm::vec3(20.0f, -50.0f, 700.0f));
+		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		mesas.RenderModel();
 
+		//Muros
+		model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(20.0f, -50.0f, 700.0f));
+		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		muros.RenderModel();
+
 		//Habitat pingüinos
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, -50.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(7.0f, 4.0f, 7.0f));
+		//model = glm::translate(model, glm::vec3(0.0f, -50.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(7.0f, 4.0f, 7.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		habitat_pinguino.RenderModel();
 
-		//Escenario temporal
+		//Habitat lemures
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, -50.0f, 0.0f));
+		//model = glm::translate(model, glm::vec3(0.0f, -50.0f, 0.0f));
 		//model = glm::scale(model, glm::vec3(7.0f, 4.0f, 7.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		escenario_temporal.RenderModel();
+		habitat_lemur.RenderModel();
+
+		//Habitat monos
+		model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(0.0f, -50.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(7.0f, 4.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		habitat_mono.RenderModel();
+
+		//Suelo
+		model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(0.0f, -50.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(7.0f, 4.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		suelo.RenderModel();
 
 		//Habitat flamingos
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(600.0f, -40.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		//model = glm::translate(model, glm::vec3(600.0f, -40.0f, 0.0f));
+		//model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		habitat_flamingo.RenderModel();
 
 		//Habitat nutria
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, -40.0f, -600.0f));
-		model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		//model = glm::translate(model, glm::vec3(0.0f, -40.0f, -600.0f));
+		//model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		habitat_nutria.RenderModel();
