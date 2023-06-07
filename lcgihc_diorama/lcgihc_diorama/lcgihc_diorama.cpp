@@ -53,6 +53,10 @@ float movPiernaMBD = false;
 float movCMono = 0.0f; 
 float movCMonoB = true; 
 
+bool aniPinguinos = false; 
+bool aniMarlene = false; 
+bool aniMono = false; 
+
 
 //variables de control de skybox
 int momento_ciclo;
@@ -63,9 +67,6 @@ std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
 
 Camera camera;
-
-//PISO 
-Texture pisoTexture;
 
 //MODELOS DEL PROYECTO 
 
@@ -92,6 +93,24 @@ Model brazoIzqMono;
 Model brazoDerMono; 
 Model piernaIzqMono; 
 Model piernaDerMono; 
+
+//-- ESCENARIO
+Model entrada;
+Model muros;
+Model habitat_pinguino;
+Model suelo;
+Model habitat_flamingo;
+Model habitat_nutria;
+Model habitat_lemur;
+Model habitat_mono;
+Model storage;
+Model zoovenirs;
+Model bancas;
+Model contenedor;
+Model botes_basura;
+Model lamparas;
+Model mesas;
+
 
 //-- POSICION PERSONAJES 
 glm::vec3 posSkipper; 
@@ -129,69 +148,12 @@ static const char* vShader = "shaders/shader_light.vert";
 // Fragment Shader
 static const char* fShader = "shaders/shader_light.frag";
 
-
-//cálculo del promedio de las normales para sombreado de Phong
-void calcAverageNormals(unsigned int* indices, unsigned int indiceCount, GLfloat* vertices, unsigned int verticeCount,
-	unsigned int vLength, unsigned int normalOffset)
-{
-	for (size_t i = 0; i < indiceCount; i += 3)
-	{
-		unsigned int in0 = indices[i] * vLength;
-		unsigned int in1 = indices[i + 1] * vLength;
-		unsigned int in2 = indices[i + 2] * vLength;
-		glm::vec3 v1(vertices[in1] - vertices[in0], vertices[in1 + 1] - vertices[in0 + 1], vertices[in1 + 2] - vertices[in0 + 2]);
-		glm::vec3 v2(vertices[in2] - vertices[in0], vertices[in2 + 1] - vertices[in0 + 1], vertices[in2 + 2] - vertices[in0 + 2]);
-		glm::vec3 normal = glm::cross(v1, v2);
-		normal = glm::normalize(normal);
-
-		in0 += normalOffset; in1 += normalOffset; in2 += normalOffset;
-		vertices[in0] += normal.x; vertices[in0 + 1] += normal.y; vertices[in0 + 2] += normal.z;
-		vertices[in1] += normal.x; vertices[in1 + 1] += normal.y; vertices[in1 + 2] += normal.z;
-		vertices[in2] += normal.x; vertices[in2 + 1] += normal.y; vertices[in2 + 2] += normal.z;
-	}
-
-	for (size_t i = 0; i < verticeCount / vLength; i++)
-	{
-		unsigned int nOffset = i * vLength + normalOffset;
-		glm::vec3 vec(vertices[nOffset], vertices[nOffset + 1], vertices[nOffset + 2]);
-		vec = glm::normalize(vec);
-		vertices[nOffset] = vec.x; vertices[nOffset + 1] = vec.y; vertices[nOffset + 2] = vec.z;
-	}
-}
-
 void CreateShaders()
 {
 	Shader* shader1 = new Shader();
 	shader1->CreateFromFiles(vShader, fShader);
 	shaderList.push_back(*shader1);
 }
-
-void CreateObjects()
-{
-
-	unsigned int floorIndices[] = {
-		0, 2, 1,
-		1, 2, 3
-	};
-
-	GLfloat floorVertices[] = {
-		-10.0f, 0.0f, -10.0f,	0.0f, 0.0f,		0.0f, -1.0f, 0.0f,
-		10.0f, 0.0f, -10.0f,	10.0f, 0.0f,	0.0f, -1.0f, 0.0f,
-		-10.0f, 0.0f, 10.0f,	0.0f, 10.0f,	0.0f, -1.0f, 0.0f,
-		10.0f, 0.0f, 10.0f,		10.0f, 10.0f,	0.0f, -1.0f, 0.0f
-	};
-
-
-	Mesh *obj3 = new Mesh();
-	obj3->CreateMesh(floorVertices, floorIndices, 32, 6);
-	meshList.push_back(obj3);
-
-}
-
-
-
-
-/* FIN KEYFRAMES*/
 
 void movAletas() {
 	if (angAletas <= 30.0f and movAletasB)
@@ -272,13 +234,9 @@ int main()
 	mainWindow = Window(1960, 1080); // 1280, 1024 or 1024, 768
 	mainWindow.Initialise();
 
-	CreateObjects();
 	CreateShaders();
 
-	camera = Camera(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.5f, 0.5f);
-
-	pisoTexture = Texture("Textures/piso.tga");
-	pisoTexture.LoadTextureA();
+	camera = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.5f, 0.5f);
 
     // Modelo y posición de los personajes 
 	cuerpoSkipper = Model();
@@ -345,6 +303,39 @@ int main()
 	glm::vec3 escalaPinguinos = glm::vec3(20.0f, 20.0f, 20.0f);
 	glm::vec3 escalaMarlene = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 escalaMono = glm::vec3(10.0f, 10.0f, 10.0f);
+
+	//Modeloa hábitats 
+
+	habitat_pinguino = Model();
+	habitat_pinguino.LoadModel("Obj/habitat_pinguinos.obj");
+	suelo = Model();
+	suelo.LoadModel("Obj/suelo.obj");
+	habitat_flamingo = Model();
+	habitat_flamingo.LoadModel("Obj/habitat_flamingo.obj");
+	habitat_nutria = Model();
+	habitat_nutria.LoadModel("Obj/habitat_nutrias.obj");
+	entrada = Model();
+	entrada.LoadModel("Obj/entrada_completa.obj");
+	storage = Model();
+	storage.LoadModel("Obj/zoo_storage.obj");
+	zoovenirs = Model();
+	zoovenirs.LoadModel("Obj/tiendas_zoovenirs.obj");
+	bancas = Model();
+	bancas.LoadModel("Obj/bancas_objeto.obj");
+	contenedor = Model();
+	contenedor.LoadModel("Obj/contenedor.obj");
+	botes_basura = Model();
+	botes_basura.LoadModel("Obj/botes_basura.obj");
+	lamparas = Model();
+	lamparas.LoadModel("Obj/lamparas.obj");
+	mesas = Model();
+	mesas.LoadModel("Obj/mesas.obj");
+	muros = Model();
+	muros.LoadModel("Obj/muros.obj");
+	habitat_lemur = Model();
+	habitat_lemur.LoadModel("Obj/habitat_lemures.obj");
+	habitat_mono = Model();
+	habitat_mono.LoadModel("Obj/habitat_monos.obj");
 
 
 	// Importacion de texturas Skybox
@@ -449,9 +440,6 @@ int main()
 
 	// control de lampara
 	bool banderaLampara = true;
-
-	//KEYFRAMES DECLARADOS INICIALES
-
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0, uniformSpecularIntensity = 0, uniformShininess = 0, uniformTextureOffset = 0;
 	GLuint uniformColor = 0;
@@ -573,21 +561,100 @@ int main()
 
 
 		//ESCENARIO
-
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(30.0f, 1.0f, 30.0f));
+		//Entrada zoologico
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
-		pisoTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		entrada.RenderModel();
 
-		meshList[0]->RenderMesh();
+		//Almacen
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		storage.RenderModel();
 
-		//PERSONAJES
+		//Tienda zoovenirs
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		zoovenirs.RenderModel();
+
+		//Banca 1
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		bancas.RenderModel();
+
+		//Contenedor
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		contenedor.RenderModel();
+
+		//Bote basura
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		botes_basura.RenderModel();
+
+		//Lampara 1
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		lamparas.RenderModel();
+
+		//Mesas
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		mesas.RenderModel();
+
+		//Muros
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		muros.RenderModel();
+
+		//Suelo
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		suelo.RenderModel();
+
+		//Habitat pingüinos
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		habitat_pinguino.RenderModel();
 
 		/*
+		//Habitat lemures
+		model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(0.0f, -50.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(7.0f, 4.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		habitat_lemur.RenderModel();
+
+		//Habitat monos
+		model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(0.0f, -50.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(7.0f, 4.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		habitat_mono.RenderModel();
+	
+		//Habitat flamingos
+		model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(600.0f, -40.0f, 0.0f));
+		//model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		habitat_flamingo.RenderModel();
+
+		//Habitat nutria
+		model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(0.0f, -40.0f, -600.0f));
+		//model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		habitat_nutria.RenderModel();
+		*/
+		//PERSONAJES
+
+		
 
 		// ---------------  S K I P P E R  ----------------------
 
@@ -694,7 +761,7 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brazoDerCabo.RenderModel();
 
-		*/
+		
 
 		// ---------------  M A R L E N E  ----------------------
 
@@ -747,7 +814,7 @@ int main()
 		*/
 
 		// ---------------  M O N O  ----------------------
-
+		/*
 		
 		model = glm::mat4(1.0);
 		modelaux = glm::mat4(1.0);
@@ -795,18 +862,39 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piernaDerMono.RenderModel();
 		
+		*/
 		
 		// ----------- M O V  ----  P I N G U I N O S ---------------
+
+		if (mainWindow.getsKeys()[GLFW_KEY_2])
+			aniPinguinos = true; 
+
+		if (mainWindow.getsKeys()[GLFW_KEY_3])
+			aniMarlene = true;
+
+		if (mainWindow.getsKeys()[GLFW_KEY_4])
+			aniMono = true;
 		
-		//Movimiento de los brazos 
-		//movAletas(); 
+		if (mainWindow.getsKeys()[GLFW_KEY_X]) {
+			aniPinguinos = false;
+			aniMarlene = false;
+			aniMono = false;
+		}
+			
+
+		if(aniPinguinos)
+			movAletas(); 
 		
 		// ----------- M O V  ----  M A R L E N E ---------------
 		
-		//movLemniscateMarlene();
-		//movBrazosPiernasMarlene();
-
-		movColumpioMono(); 
+		if (aniMarlene) {
+			movLemniscateMarlene();
+			movBrazosPiernasMarlene();
+		}
+	
+		if (aniMono) {
+			movColumpioMono();
+		}
 
 		glUseProgram(0);
 

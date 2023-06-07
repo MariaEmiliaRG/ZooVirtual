@@ -14,7 +14,7 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 
 	moveSpeed = startMoveSpeed;
 	turnSpeed = startTurnSpeed;
-	viewType = true;		// Inicialización agregada por Aldo
+	viewType = true;		
 	banderaCamara = true;
 
 	update();
@@ -44,8 +44,6 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 		position += right * velocity;
 	}
 
-
-	// Control de cámara: agregado por Aldo
 	if (keys[GLFW_KEY_1] && banderaCamara)
 	{
 		banderaCamara = false;

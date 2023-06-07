@@ -1,0 +1,99 @@
+# 3ds Max Wavefront OBJ Exporter v0.99 - (c)2007 guruware
+# File Created: 04.06.2023 21:04:53
+
+newmtl murosLadrillo
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka D:\dlap-\Documents\ProyectoFinalCGeIHC2023-2\ZooVirtual\lcgihc_diorama\lcgihc_diorama\Textures\muroladrillo.jpg
+	map_Kd D:\dlap-\Documents\ProyectoFinalCGeIHC2023-2\ZooVirtual\lcgihc_diorama\lcgihc_diorama\Textures\muroladrillo.jpg
+
+newmtl concreto
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka D:\dlap-\Documents\ProyectoFinalCGeIHC2023-2\ZooVirtual\lcgihc_diorama\lcgihc_diorama\Textures\concreto.jpg
+	map_Kd D:\dlap-\Documents\ProyectoFinalCGeIHC2023-2\ZooVirtual\lcgihc_diorama\lcgihc_diorama\Textures\concreto.jpg
+
+newmtl estatuas
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka D:\dlap-\Documents\ProyectoFinalCGeIHC2023-2\ZooVirtual\lcgihc_diorama\lcgihc_diorama\Textures\cobre.jpg
+	map_Kd D:\dlap-\Documents\ProyectoFinalCGeIHC2023-2\ZooVirtual\lcgihc_diorama\lcgihc_diorama\Textures\cobre.jpg
+
+newmtl campana
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka D:\dlap-\Documents\ProyectoFinalCGeIHC2023-2\ZooVirtual\lcgihc_diorama\lcgihc_diorama\Textures\campana.jpg
+	map_Kd D:\dlap-\Documents\ProyectoFinalCGeIHC2023-2\ZooVirtual\lcgihc_diorama\lcgihc_diorama\Textures\campana.jpg
+
+newmtl lampara
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka initialShadingGroup_albedo.jpeg
+	map_Kd initialShadingGroup_albedo.jpeg
+	map_d initialShadingGroup_opacity.jpeg
+	map_bump -bm 0.3000 initialShadingGroup_roughness.jpeg
+	bump -bm 0.3000 initialShadingGroup_roughness.jpeg
+
+newmtl Material__863
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka D:\dlap-\Documents\ProyectoFinalCGeIHC2023-2\ZooVirtual\lcgihc_diorama\lcgihc_diorama\Textures\reloj.jpg
+	map_Kd D:\dlap-\Documents\ProyectoFinalCGeIHC2023-2\ZooVirtual\lcgihc_diorama\lcgihc_diorama\Textures\reloj.jpg
+
+newmtl wire_177148027
+	Ns 32
+	d 1
+	Tr 0
+	Tf 1 1 1
+	illum 2
+	Ka 0.6941 0.5804 0.1059
+	Kd 0.6941 0.5804 0.1059
+	Ks 0.3500 0.3500 0.3500
