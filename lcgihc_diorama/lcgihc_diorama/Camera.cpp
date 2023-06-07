@@ -69,7 +69,7 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 	}
 
 	if (viewType) {
-		position.y = 5.0f;
+		position.y = 20.0f;
 	}
 }
 

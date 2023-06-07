@@ -309,6 +309,7 @@ int main()
 
 	suelo = Model();
 	suelo.LoadModel("Obj/suelo.obj");
+	/*
 	habitat_pinguino = Model();
 	habitat_pinguino.LoadModel("Obj/habitat_pinguinos.obj");
 	habitat_flamingo = Model();
@@ -333,6 +334,7 @@ int main()
 	contenedor.LoadModel("Obj/contenedor.obj");
 	botes_basura = Model();
 	botes_basura.LoadModel("Obj/botes_basura.obj");
+	*/
 	lamparas = Model();
 	lamparas.LoadModel("Obj/lamparas.obj");
 	mesas = Model();
@@ -378,7 +380,7 @@ int main()
 
 	// ILUMINACIÓN
 	// Luz direccional, sólo 1 y siempre debe de existir
-	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
+	mainLight = DirectionalLight(1.0f, 0.0f, 0.0f,
 		0.6f, 0.6f,
 		0.0f, 0.0f, -1.0f);
 
@@ -386,25 +388,51 @@ int main()
 	unsigned int pointLightCount = 0;
 
 	// foco 0
-	pointLights[0] = PointLight(1.0f, 0.0f, 0.0f,
-		2.0f, 1.0f,
-		45.0f, 15.0f, 33.0f,
+	pointLights[pointLightCount] = PointLight(1.0f, 1.0f, 1.0f,
+		10.0f, 10.0f,
+		28.5f, 23.0f, 18.0f,
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
 
 	// foco 1
-	pointLights[1] = PointLight(1.0f, 0.0f, 0.0f,
-		2.0f, 1.0f,
-		45.0f, 5.0f, 41.0f,
+	pointLights[pointLightCount] = PointLight(1.0f, 1.0f, 1.0f,
+		10.0f, 10.0f,
+		-28.5f, 23.0f, 18.0f,
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
 
 	// foco 2
-	pointLights[2] = PointLight(1.0f, 0.5f, 0.0f,
-		2.0f, 1.0f,
-		62.0f, 16.0f, 9.0f,
+	pointLights[pointLightCount] = PointLight(1.0f, 1.0f, 1.0f,
+		10.0f, 10.0f,
+		28.5f, 23.0f, -18.0f,
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
+
+	// foco 3
+	pointLights[pointLightCount] = PointLight(1.0f, 1.0f, 1.0f,
+		10.0f, 10.0f,
+		-28.5f, 23.0f, -18.0f,
+		0.3f, 0.2f, 0.1f);
+	pointLightCount++;
+
+	pointLights[pointLightCount] = PointLight(1.0f, 1.0f, 1.0f,
+		10.0f, 10.0f,
+		65.5f, 23.0f, -66.1f,
+		0.3f, 0.2f, 0.1f);
+	pointLightCount++;
+
+	pointLights[pointLightCount] = PointLight(1.0f, 1.0f, 1.0f,
+		10.0f, 10.0f,
+		75.0f, 23.0f, 71.6f,
+		0.3f, 0.2f, 0.1f);
+	pointLightCount++;
+
+	pointLights[pointLightCount] = PointLight(1.0f, 1.0f, 1.0f,
+		10.0f, 10.0f,
+		67.5f, 23.0f, -64.6f,
+		0.3f, 0.2f, 0.1f);
+	pointLightCount++;
+
 
 	unsigned int savePointLightCount = pointLightCount;
 
