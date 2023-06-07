@@ -1,8 +1,8 @@
 ﻿  lcgihc_diorama.cpp
 D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\Window.h(12,36): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
 D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\Window.h(13,37): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
-D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(186,21): warning C4244: '-=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(189,21): warning C4244: '+=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(186,22): warning C4244: '-=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(189,22): warning C4244: '+=': conversión de 'double' a 'float'; posible pérdida de datos
 D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(195,26): warning C4244: '+=': conversión de 'double' a 'float'; posible pérdida de datos
 D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(200,29): warning C4244: '+=': conversión de 'double' a 'float'; posible pérdida de datos
 D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(205,28): warning C4244: '-=': conversión de 'double' a 'float'; posible pérdida de datos
@@ -10,7 +10,7 @@ D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_dio
 D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(215,28): warning C4244: '-=': conversión de 'double' a 'float'; posible pérdida de datos
 D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(222,20): warning C4244: '+=': conversión de 'double' a 'float'; posible pérdida de datos
 D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(227,19): warning C4244: '-=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(458,15): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(460,33): warning C4244: '+=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(474,27): warning C4244: '+=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(460,15): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(462,33): warning C4244: '+=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\lcgihc_diorama\lcgihc_diorama.cpp(476,27): warning C4244: '+=': conversión de 'double' a 'float'; posible pérdida de datos
   lcgihc_diorama.vcxproj -> D:\maria\Documents\Proyectos\ZooVirtual\lcgihc_diorama\Debug\lcgihc_diorama.exe

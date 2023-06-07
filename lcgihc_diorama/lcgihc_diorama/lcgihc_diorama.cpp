@@ -168,7 +168,7 @@ void movAletas() {
 }
 
 void movLemniscateMarlene() {
-	float a = 50; 
+	float a = 20; 
 	float x = 0; 
 	float z = 0; 
 	float t = angTMarlene; 
@@ -182,11 +182,11 @@ void movLemniscateMarlene() {
 	if (angTMarlene >= 360)
 		angTMarlene = 0;
 
-	if (posMarlene.x + lemniscate.x >= 20)
-		angMarlene -= 0.9 * deltaTime;
+	if (posMarlene.x + lemniscate.x >= 5 )
+		angMarlene -= 0.75 * deltaTime;
 
-	if (posMarlene.x + lemniscate.x <= -20)
-		angMarlene += 0.9 * deltaTime;
+	if (posMarlene.x + lemniscate.x <= -5)
+		angMarlene += 0.75 * deltaTime;
 }
 
 void movBrazosPiernasMarlene() {
@@ -296,26 +296,28 @@ int main()
 	posRico = glm::vec3(-10.0f, 4.5f, 0.0f);
 	posKowalski = glm::vec3(5.0f, 4.5f, 0.0f);
 	posCabo = glm::vec3(0.0f, 4.5f, 0.0f); 
-	posMarlene = glm::vec3(0.0f, 5.0f, 0.0f);
+	posMarlene = glm::vec3(0.0f, 2.0f, -87.0f);
 	posMono = glm::vec3(0.0f, 20.0f, 0.0f);
 	lemniscate = glm::vec3(0.0f, 5.0f, 0.0f);
 
 	glm::vec3 escalaPinguinos = glm::vec3(12.0f, 12.0f, 12.0f);
-	glm::vec3 escalaMarlene = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 escalaMarlene = glm::vec3(0.6f, 0.6f, 0.6f);
 	glm::vec3 escalaMono = glm::vec3(10.0f, 10.0f, 10.0f);
 
 	//Modeloa hábitats 
 
 	suelo = Model();
 	suelo.LoadModel("Obj/suelo.obj");
-
+	/*
 	habitat_pinguino = Model();
 	habitat_pinguino.LoadModel("Obj/habitat_pinguinos.obj");
-	/*
 	habitat_flamingo = Model();
 	habitat_flamingo.LoadModel("Obj/habitat_flamingo.obj");
+	*/
+
 	habitat_nutria = Model();
 	habitat_nutria.LoadModel("Obj/habitat_nutrias.obj");
+	/*
 	habitat_lemur = Model();
 	habitat_lemur.LoadModel("Obj/habitat_lemures.obj");
 	habitat_mono = Model();
@@ -629,38 +631,28 @@ int main()
 		/*
 		//Habitat lemures
 		model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(0.0f, -50.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(7.0f, 4.0f, 7.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		habitat_lemur.RenderModel();
 
 		//Habitat monos
 		model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(0.0f, -50.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(7.0f, 4.0f, 7.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		habitat_mono.RenderModel();
 	
 		//Habitat flamingos
 		model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(600.0f, -40.0f, 0.0f));
-		//model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		habitat_flamingo.RenderModel();
+		*/ 
 
 		//Habitat nutria
-		model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(0.0f, -40.0f, -600.0f));
-		//model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		habitat_nutria.RenderModel();
-		*/
+		
 		//PERSONAJES
 
 		
@@ -774,7 +766,7 @@ int main()
 
 		// ---------------  M A R L E N E  ----------------------
 
-		/*
+		
 		model = glm::mat4(1.0); 
 		modelaux = glm::mat4(1.0); 
 		model = glm::translate(model, posMarlene + lemniscate); 
@@ -820,7 +812,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piernaDerMarlene.RenderModel();
-		*/
+		
 
 		// ---------------  M O N O  ----------------------
 		/*
