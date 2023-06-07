@@ -292,28 +292,37 @@ int main()
 
 
 
-	posSkipper = glm::vec3(10.0f, 0.0f, 0.0f);
-	posRico = glm::vec3(0.0f, 0.0f, 0.0f);
-	posKowalski = glm::vec3(20.0f, 0.0f, 0.0f);
-	posCabo = glm::vec3(30.0f, 0.0f, 0.0f); 
+	posSkipper = glm::vec3(-5.0f, 4.5f, 0.0f);
+	posRico = glm::vec3(-10.0f, 4.5f, 0.0f);
+	posKowalski = glm::vec3(5.0f, 4.5f, 0.0f);
+	posCabo = glm::vec3(0.0f, 4.5f, 0.0f); 
 	posMarlene = glm::vec3(0.0f, 5.0f, 0.0f);
 	posMono = glm::vec3(0.0f, 20.0f, 0.0f);
 	lemniscate = glm::vec3(0.0f, 5.0f, 0.0f);
 
-	glm::vec3 escalaPinguinos = glm::vec3(20.0f, 20.0f, 20.0f);
+	glm::vec3 escalaPinguinos = glm::vec3(12.0f, 12.0f, 12.0f);
 	glm::vec3 escalaMarlene = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 escalaMono = glm::vec3(10.0f, 10.0f, 10.0f);
 
 	//Modeloa hábitats 
 
-	habitat_pinguino = Model();
-	habitat_pinguino.LoadModel("Obj/habitat_pinguinos.obj");
 	suelo = Model();
 	suelo.LoadModel("Obj/suelo.obj");
+
+	habitat_pinguino = Model();
+	habitat_pinguino.LoadModel("Obj/habitat_pinguinos.obj");
+	/*
 	habitat_flamingo = Model();
 	habitat_flamingo.LoadModel("Obj/habitat_flamingo.obj");
 	habitat_nutria = Model();
 	habitat_nutria.LoadModel("Obj/habitat_nutrias.obj");
+	habitat_lemur = Model();
+	habitat_lemur.LoadModel("Obj/habitat_lemures.obj");
+	habitat_mono = Model();
+	habitat_mono.LoadModel("Obj/habitat_monos.obj");
+
+	
+	
 	entrada = Model();
 	entrada.LoadModel("Obj/entrada_completa.obj");
 	storage = Model();
@@ -332,10 +341,7 @@ int main()
 	mesas.LoadModel("Obj/mesas.obj");
 	muros = Model();
 	muros.LoadModel("Obj/muros.obj");
-	habitat_lemur = Model();
-	habitat_lemur.LoadModel("Obj/habitat_lemures.obj");
-	habitat_mono = Model();
-	habitat_mono.LoadModel("Obj/habitat_monos.obj");
+	*/
 
 
 	// Importacion de texturas Skybox
@@ -562,6 +568,7 @@ int main()
 
 		//ESCENARIO
 		model = glm::mat4(1.0);
+		/*
 		//Entrada zoologico
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -606,11 +613,13 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		muros.RenderModel();
+		*/
 
 		//Suelo
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		suelo.RenderModel();
+		
 
 		//Habitat pingüinos
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
