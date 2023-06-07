@@ -85,13 +85,19 @@ Model brazoIzqMarlene;
 Model brazoDerMarlene; 
 Model piernaIzqMarlene; 
 Model piernaDerMarlene; 
+Model cuerpoMono; 
+Model brazoIzqMono; 
+Model brazoDerMono; 
+Model piernaIzqMono; 
+Model piernaDerMono; 
 
 //-- POSICION PERSONAJES 
 glm::vec3 posSkipper; 
 glm::vec3 posRico; 
 glm::vec3 posKowalski;
 glm::vec3 posCabo;
-glm::vec3 posMarlene; 
+glm::vec3 posMarlene;
+glm::vec3 posMono; 
 glm::vec3 lemniscate;
 
 // Modelos skybox
@@ -156,83 +162,6 @@ void CreateShaders()
 	Shader* shader1 = new Shader();
 	shader1->CreateFromFiles(vShader, fShader);
 	shaderList.push_back(*shader1);
-}
-
-///////////////////////////////KEYFRAMES/////////////////////
-
-
-bool animacion = false;
-
-
-//NEW// Keyframes
-float posYroca = 0.0;
-float movRoca_y = 0.0f;
-
-#define MAX_FRAMES 30
-
-int i_max_steps = 90;
-int i_curr_steps = 10;
-
-
-typedef struct _frame
-{
-	//Variables para GUARDAR Key Frames
-	float movRoca_y;		//Variable para PosicionY
-	float movRoca_yInc;		//Variable para IncrementoY
-}FRAME;
-
-FRAME KeyFrame[MAX_FRAMES];
-
-int FrameIndex = 10;			//introducir datos
-bool play = true;
-int playIndex = 0;
-
-
-void resetElements(void)
-{
-	movRoca_y = KeyFrame[0].movRoca_y;
-}
-
-void interpolation(void)
-{
-	KeyFrame[playIndex].movRoca_yInc = (KeyFrame[playIndex + 1].movRoca_y - KeyFrame[playIndex].movRoca_y) / i_max_steps;
-}
-
-
-void animate(void)
-{
-	//Movimiento del objeto
-	if (play)
-	{
-		if (i_curr_steps >= i_max_steps) //end of animation between frames?
-		{
-			playIndex++;
-			//printf("playindex : %d\n", playIndex);
-			if (playIndex > FrameIndex - 2)	//end of total animation?
-			{
-				//printf("Frame index= %d\n", FrameIndex);
-				//printf("termina anim\n");
-				playIndex = 0;
-				play = false;
-			}
-			else //Next frame interpolations
-			{
-				//printf("entro aquí\n");
-				i_curr_steps = 0; //Reset counter
-				//Interpolation
-				interpolation();
-			}
-		}
-		else
-		{
-			//printf("se quedó aqui\n");
-			//printf("max steps: %f", i_max_steps);
-			//Draw animation
-			movRoca_y += KeyFrame[playIndex].movRoca_yInc;
-			i_curr_steps++;
-		}
-
-	}
 }
 
 void CreateObjects()
@@ -378,6 +307,17 @@ int main()
 	piernaDerMarlene = Model();
 	piernaDerMarlene.LoadModel("Obj/model_marlene/source/Marlene/PiernaDerMarlene.obj");
 
+	cuerpoMono = Model();
+	cuerpoMono.LoadModel("Obj/madagascar-monkey/source/Monkey/CuerpoMono2.obj");
+	brazoIzqMono = Model();
+	brazoIzqMono.LoadModel("Obj/madagascar-monkey/source/Monkey/BrazoIzqMono.obj");
+	brazoDerMono = Model();
+	brazoDerMono.LoadModel("Obj/madagascar-monkey/source/Monkey/BrazoDerMono.obj");
+	piernaIzqMono = Model();
+	piernaIzqMono.LoadModel("Obj/madagascar-monkey/source/Monkey/PiernaIzqMono2.obj");
+	piernaDerMono = Model();
+	piernaDerMono.LoadModel("Obj/madagascar-monkey/source/Monkey/PiernaDerMono2.obj");
+
 
 
 	posSkipper = glm::vec3(10.0f, 0.0f, 0.0f);
@@ -385,10 +325,12 @@ int main()
 	posKowalski = glm::vec3(20.0f, 0.0f, 0.0f);
 	posCabo = glm::vec3(30.0f, 0.0f, 0.0f); 
 	posMarlene = glm::vec3(0.0f, 5.0f, 0.0f);
+	posMono = glm::vec3(0.0f, 20.0f, 0.0f);
 	lemniscate = glm::vec3(0.0f, 5.0f, 0.0f);
 
 	glm::vec3 escalaPinguinos = glm::vec3(20.0f, 20.0f, 20.0f);
 	glm::vec3 escalaMarlene = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 escalaMono = glm::vec3(10.0f, 10.0f, 10.0f);
 
 
 	// Importacion de texturas Skybox
@@ -742,6 +684,7 @@ int main()
 
 		// ---------------  M A R L E N E  ----------------------
 
+		/*
 		model = glm::mat4(1.0); 
 		modelaux = glm::mat4(1.0); 
 		model = glm::translate(model, posMarlene + lemniscate); 
@@ -779,8 +722,6 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piernaIzqMarlene.RenderModel();
-
-
 		
 		model = modelaux;
 		
@@ -789,31 +730,67 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piernaDerMarlene.RenderModel();
+		*/
+
+		// ---------------  M O N O  ----------------------
 
 		
-		//-- ANIMACIONES
+		model = glm::mat4(1.0);
+		modelaux = glm::mat4(1.0);
+		model = glm::translate(model, posMono);
+		model = glm::scale(model, escalaMono);
+		modelaux = model;
+
+		//model = glm::rotate(model, (-135 + angMarlene) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		cuerpoMono.RenderModel();
+
+		modelaux = model;
+
+		model = glm::translate(model, glm::vec3(0.0f, -0.8f, 0.0f));
+		model = glm::rotate(model, -45 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		//model = glm::rotate(model, (movBrazoMarlene)* toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		brazoIzqMono.RenderModel();
+
+
+		model = modelaux;
+
+		model = glm::translate(model, glm::vec3(0.0f, -0.8f, 0.0f));
+		model = glm::rotate(model, 45 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		//model = glm::rotate(model, (movBrazoMarlene) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		brazoDerMono.RenderModel();
+
+		model = modelaux;
+
+		model = glm::translate(model, glm::vec3(-0.1f, -1.36f, 0.26f));
+		//model = glm::rotate(model, movPiernaMarleneI*toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		piernaIzqMono.RenderModel();
+
+		model = modelaux;
+
+		model = glm::translate(model, glm::vec3(0.1f, -1.36f, 0.26f));
+		//model = glm::rotate(model, 45 *toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		piernaDerMono.RenderModel();
+		
+		
+		// ----------- M O V  ----  P I N G U I N O S ---------------
+		
 		//Movimiento de los brazos 
 		//movAletas(); 
 		
 		// ----------- M O V  ----  M A R L E N E ---------------
 		
-		movLemniscateMarlene();
-		movBrazosPiernasMarlene();
-
-		
-
-		if (mainWindow.getsKeys()[GLFW_KEY_G])
-			printf("%f, pos %f\n", angMarlene, posMarlene.x + lemniscate.x);
-
-
-
-
-
-		
-		
-
-
-
+		//movLemniscateMarlene();
+		//movBrazosPiernasMarlene();
 
 		glUseProgram(0);
 
