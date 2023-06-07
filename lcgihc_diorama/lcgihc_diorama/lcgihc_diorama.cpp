@@ -45,6 +45,12 @@ bool movAletasB = true;
 float angTMarlene = 0.0f; 
 float angTMarleneOffset = 0.005f;
 float angMarlene = -135.0f; 
+float movBrazoMarlene = 0.0;
+float movPiernaMarleneI = 45.0f; 
+float movPiernaMarleneD = -45.0f; 
+float movPiernaMBI = true;
+float movPiernaMBD = false;
+
 
 //variables de control de skybox
 int momento_ciclo;
@@ -268,14 +274,54 @@ void movAletas() {
 		movAletasB = true;
 }
 
-void movLemniscate(float t) {
+void movLemniscateMarlene() {
 	float a = 50; 
 	float x = 0; 
 	float z = 0; 
+	float t = angTMarlene; 
 
 	x = (a * cos(t))/ (1 + (sin(t) * sin(t))); 
 	z = (a * cos(t) * sin(t)) / (1 + (sin(t) * sin(t)));
 	lemniscate = glm::vec3(x, 0.0f, z);
+
+	angTMarlene += angTMarleneOffset * deltaTime;
+
+	if (angTMarlene >= 360)
+		angTMarlene = 0;
+
+	if (posMarlene.x + lemniscate.x >= 20)
+		angMarlene -= 0.9 * deltaTime;
+
+	if (posMarlene.x + lemniscate.x <= -20)
+		angMarlene += 0.9 * deltaTime;
+}
+
+void movBrazosPiernasMarlene() {
+	
+	if (movBrazoMarlene <= 360)
+		movBrazoMarlene += 1.2 * deltaTime;
+	else
+		movBrazoMarlene = 0; 
+
+	if (movPiernaMarleneI <= 45.0f and movPiernaMBI)
+		movPiernaMarleneI += +0.9 * deltaTime;
+	else
+		movPiernaMBI = false;
+
+	if (movPiernaMarleneI >= -45.0f and !movPiernaMBI)
+		movPiernaMarleneI -= 0.9 * deltaTime;
+	else
+		movPiernaMBI = true;
+
+	if (movPiernaMarleneD <= 45.0f and movPiernaMBD)
+		movPiernaMarleneD += +0.9 * deltaTime;
+	else
+		movPiernaMBD = false;
+
+	if (movPiernaMarleneD >= -45.0f and !movPiernaMBD)
+		movPiernaMarleneD -= 0.9 * deltaTime;
+	else
+		movPiernaMBD = true;
 }
 
 int main()
@@ -700,6 +746,8 @@ int main()
 		modelaux = glm::mat4(1.0); 
 		model = glm::translate(model, posMarlene + lemniscate); 
 		model = glm::scale(model, escalaMarlene); 
+		modelaux = model;
+
 		model = glm::rotate(model, (-135 + angMarlene) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model)); 
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess); 
@@ -708,7 +756,8 @@ int main()
 		modelaux = model;
 
 		model = glm::translate(model, glm::vec3(-1.0f, 0.1f, -1.8f));
-		//model = glm::rotate(model, (-90 + angAletas) * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, (movBrazoMarlene)* toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model)); 
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess); 
 		brazoIzqMarlene.RenderModel(); 
@@ -717,7 +766,8 @@ int main()
 		model = modelaux;
 
 		model = glm::translate(model, glm::vec3(-1.0f, 0.1f, 1.8f));
-		//model = glm::rotate(model, (-90 + angAletas) * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, (movBrazoMarlene) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brazoDerMarlene.RenderModel();
@@ -725,15 +775,17 @@ int main()
 		model = modelaux;
 
 		model = glm::translate(model, glm::vec3(5.2f, 0.2f, -1.80f));
-		//model = glm::rotate(model, (-90 + angAletas) * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, movPiernaMarleneI*toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piernaIzqMarlene.RenderModel();
 
+
+		
 		model = modelaux;
 		
 		model = glm::translate(model, glm::vec3(5.2f, 0.2f, 1.8f));
-		//model = glm::rotate(model, (-90 + angAletas) * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, movPiernaMarleneD *toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piernaDerMarlene.RenderModel();
@@ -743,21 +795,12 @@ int main()
 		//Movimiento de los brazos 
 		//movAletas(); 
 		
-		//movimiento Infinito 
-
-		angTMarlene += angTMarleneOffset * deltaTime;
+		// ----------- M O V  ----  M A R L E N E ---------------
 		
-		movLemniscate(angTMarlene);
+		movLemniscateMarlene();
+		movBrazosPiernasMarlene();
 
-		if (angTMarlene >= 360) {
-			angTMarlene = 0;
-		}
-
-		if (posMarlene.x + lemniscate.x >= 20)
-			angMarlene -= 0.9 * deltaTime; 
-
-		if (posMarlene.x + lemniscate.x <= -20)
-			angMarlene += 0.9 * deltaTime;
+		
 
 		if (mainWindow.getsKeys()[GLFW_KEY_G])
 			printf("%f, pos %f\n", angMarlene, posMarlene.x + lemniscate.x);
