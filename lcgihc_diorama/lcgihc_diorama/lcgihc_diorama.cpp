@@ -93,6 +93,9 @@ Model brazoIzqMono;
 Model brazoDerMono; 
 Model piernaIzqMono; 
 Model piernaDerMono; 
+Model lemurMort;
+Model lemurMaurice;
+Model lemurJulien;
 
 //-- ESCENARIO
 Model entrada;
@@ -290,6 +293,15 @@ int main()
 	piernaIzqMono.LoadModel("Obj/madagascar-monkey/source/Monkey/PiernaIzqMono2.obj");
 	piernaDerMono = Model();
 	piernaDerMono.LoadModel("Obj/madagascar-monkey/source/Monkey/PiernaDerMono2.obj");
+
+	lemurMort = Model();
+	lemurMort.LoadModel("Obj/lemur_mort.obj");
+
+	lemurMaurice = Model();
+	lemurMaurice.LoadModel("Obj/lemur_maurice.obj");
+
+	lemurJulien = Model();
+	lemurJulien.LoadModel("Obj/lemur_julien.obj");
 
 
 
@@ -885,7 +897,21 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piernaDerMono.RenderModel();
+
+		// ---------------  M O R T  ----------------------
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		lemurMort.RenderModel();
 		
+		// --------------  M A U R I C E ------------------
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		lemurMaurice.RenderModel();
+		
+		// ---------------  J U L I E N  ------------------
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		lemurJulien.RenderModel();
 		
 		// ----------- M O V  ----  P I N G U I N O S ---------------
 
