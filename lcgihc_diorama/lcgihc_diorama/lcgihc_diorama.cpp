@@ -322,6 +322,8 @@ int main()
 	habitat_mono.LoadModel("Obj/habitat_monos.obj");
 	habitat_mono2 = Model();
 	habitat_mono2.LoadModel("Obj/habitat_monos_2.obj");
+	*/
+	
 	entrada = Model();
 	entrada.LoadModel("Obj/entrada_completa.obj");
 	storage = Model();
@@ -334,7 +336,7 @@ int main()
 	contenedor.LoadModel("Obj/contenedor.obj");
 	botes_basura = Model();
 	botes_basura.LoadModel("Obj/botes_basura.obj");
-	*/
+	
 	lamparas = Model();
 	lamparas.LoadModel("Obj/lamparas.obj");
 	mesas = Model();
